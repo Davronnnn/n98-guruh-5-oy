@@ -1,60 +1,108 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ContactForm from './ContactForm';
 
-const Modal = ({ contact, setContacts, contacts }) => {
-	console.log(contact, contacts);
+const Modal = ({ contact, setContacts, contacts, closeModal }) => {
+	const [newState, setNewState] = useState({
+		id: contact.id,
+		title: contact.title,
+	});
 	return (
 		<div
-			class='modal fade'
-			id='staticBackdrop'
-			data-bs-backdrop='static'
-			data-bs-keyboard='false'
-			tabIndex='-1'
-			aria-labelledby='staticBackdropLabel'
-			aria-hidden='true'>
-			<div class='modal-dialog'>
-				<div class='modal-content'>
-					<div class='modal-header'>
-						<h1 class='modal-title fs-5' id='staticBackdropLabel'>
+			style={{
+				zIndex: '100',
+				top: 0,
+				left: 0,
+				width: '100vw',
+				height: '100vh',
+
+				backgroundColor: 'rgba(0,0,0,0.5)',
+			}}
+			className='custom-modal position-fixed '>
+			<div className='modal-dialog'>
+				<div className='modal-content'>
+					<div className='modal-header'>
+						<h1
+							className='modal-title fs-5'
+							id='staticBackdropLabel'>
 							Modal title
 						</h1>
 						<button
+							onClick={() => {
+								closeModal(false);
+							}}
 							type='button'
-							class='btn-close'
+							className='btn-close'
 							data-bs-dismiss='modal'
 							aria-label='Close'></button>
 					</div>
-					<div class='modal-body'>
+					<div className='modal-body'>
 						<form>
 							<input
 								type='text'
-								value={contact.title}
+								value={newState.title}
+								onChange={(evt) => {
+									// const result = contacts.map((element) => {
+									// 	if (element.id === contact.id) {
+									// 		element.title = evt.target.value;
+									// 	}
+									// 	return element;
+									// });
+									// setContacts(result);
+									setNewState(evt.target.value);
+								}}
 								name=''
 								id=''
 							/>
 							<input
 								type='text'
 								value={contact.relationship}
+								onChange={(evt) => {
+									const result = contacts.map((element) => {
+										if (element.id === contact.id) {
+											element.relationship =
+												evt.target.value;
+										}
+										return element;
+									});
+									setContacts(result);
+								}}
 								name=''
 								id=''
 							/>
 							<input
 								value={contact.phone}
+								onChange={(evt) => {
+									const result = contacts.map((element) => {
+										if (element.id === contact.id) {
+											element.phone = evt.target.value;
+										}
+										return element;
+									});
+									setContacts(result);
+								}}
 								type='text'
 								name=''
 								id=''
 							/>
 						</form>
 					</div>
-					<div class='modal-footer'>
+					<div className='modal-footer'>
 						<button
+							onClick={() => {
+								closeModal(false);
+							}}
 							type='button'
-							class='btn btn-secondary'
+							className='btn btn-secondary'
 							data-bs-dismiss='modal'>
 							Close
 						</button>
-						<button type='button' class='btn btn-primary'>
-							Understood
+						<button
+							onClick={() => {
+								closeModal(false);
+							}}
+							type='button'
+							className='btn btn-primary'>
+							Save
 						</button>
 					</div>
 				</div>

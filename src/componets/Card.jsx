@@ -1,6 +1,7 @@
 const Card = ({ post, isFive }) => {
 	let result = '';
 
+	
 	if (isFive) {
 		result = <p className='text-primary'>{post.id}</p>;
 	}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ContactCard from './ContactCard';
 import ContactForm from './ContactForm';
 
