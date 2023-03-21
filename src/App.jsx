@@ -1,8 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+
 import './app.scss';
+
+import Header from './componets/Header';
+import { AuthContext } from './context/AuthContext';
+import ContactBook from './componets/ContactBook';
+import Footer from './componets/Footer';
 
 function App() {
 	const [todos, setTodos] = useState([]);
+
+	const { isLogin } = useContext(AuthContext);
 
 	useEffect(() => {
 		fetch('https://jsonplaceholder.typicode.com/todos')
@@ -13,25 +21,26 @@ function App() {
 	}, []);
 
 	return (
-		<div className=''>
-			<h2 className='flex m-5 text-[blue]  p-[30px] w-[200px] '>
-				Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-				Officiis, minus aliquam perferendis placeat explicabo magni,
-				eaque sed animi amet debitis adipisci culpa, assumenda illo
-				ullam commodi iure natus aut ex!
-			</h2>
+		<div className='w-full'>
+			<Header />
+			<Footer />
+			<div className='w-full p-5'>
+				{isLogin ? (
+					<h1 className='bg-green-500 text-white'>
+						Ro'yxatdan o'tgansiz xush kelibsiz
+					</h1>
+				) : (
+					<h1 className='bg-red-500'>Ro'yxatdan o'tmagansiz xayr</h1>
+				)}
 
-			<div className='my-3  bg-slate-600 flex justify-around flex-col  sm:flex-row '>
-				<div>1</div>
-				<div>1</div>
-				<div>1</div>
+				<ContactBook />
+
+				{todos.map((todo, i) => (
+					<div className='font-extrabold mt-2' key={i}>
+						{todo.title}
+					</div>
+				))}
 			</div>
-
-			{todos.map((todo, i) => (
-				<div className='font-extrabold mt-2' key={i}>
-					{todo.title}
-				</div>
-			))}
 		</div>
 	);
 }

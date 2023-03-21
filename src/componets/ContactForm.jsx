@@ -22,8 +22,8 @@ const ContactForm = ({ contacts, setContacts }) => {
 		// setPhone('');
 	};
 	return (
-		<form onSubmit={submitHandler} className='col-5'>
-			<h3>New contact form</h3>
+		<form onSubmit={submitHandler} className='col-5 d-flex flex-col'>
+			<h3>New contact form </h3>
 			<input
 				placeholder='title'
 				className='form-control mt-3'
@@ -46,7 +46,7 @@ const ContactForm = ({ contacts, setContacts }) => {
 				onChange={(evt) => setPhone(evt.target.value)}
 			/>
 
-			<button type='submit' className='btn btn-primary form-control mt-3'>
+			<button type='submit' className='bg-blue-600 p-3 text-white mt-3'>
 				Add contact
 			</button>
 		</form>
