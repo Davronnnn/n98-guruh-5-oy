@@ -1,14 +1,19 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { LanguageContext } from '../context/LanguageContext';
-import { language } from '../language';
+// import { LanguageContext } from '../context/LanguageContext';
+// import { language } from '../language';
 import Nav from './Nav';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
-	const { setIsLogin } = useContext(AuthContext);
+	const { setIsLogin, isLogin } = useContext(AuthContext);
 
-	const { setLanguageType, languageType } = useContext(LanguageContext);
+	// const { setLanguageType, languageType } = useContext(LanguageContext);
 
+	const logoutHandler = () => {
+		setIsLogin(false);
+		localStorage.removeItem('token');
+	};
 	return (
 		<header>
 			<nav className='bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800'>
@@ -22,14 +27,14 @@ const Header = () => {
 							alt='Flowbite Logo'
 						/>
 						<span className='self-center text-xl font-semibold whitespace-nowrap dark:text-white'>
-							{language[languageType].header.title}
+							{/* {language[languageType].header.title} */}
 						</span>
 					</a>
 
 					<select
 						onChange={(evt) => {
 							localStorage.setItem('lang', evt.target.value);
-							setLanguageType(evt.target.value);
+							// setLanguageType(evt.target.value);
 						}}
 						name=''
 						id=''>
@@ -37,17 +42,27 @@ const Header = () => {
 						<option value='ru'>ru</option>
 					</select>
 					<div className='flex items-center lg:order-2'>
-						<button
-							onClick={() => {
-								setIsLogin((prev) => !prev);
-							}}
-							className='text-gray-800 dark:text-white
+						{!isLogin ? (
+							<Link
+								to={'/login'}
+								className='text-gray-800 dark:text-white
 							hover:bg-gray-50 focus:ring-4 focus:ring-gray-300
 							font-medium rounded-lg text-sm px-4 lg:px-5 py-2
 							lg:py-2.5 mr-2 dark:hover:bg-gray-700
 							focus:outline-none dark:focus:ring-gray-800'>
-							Log in
-						</button>
+								Log in
+							</Link>
+						) : (
+							<button
+								onClick={logoutHandler}
+								className='text-gray-800 dark:text-white
+							hover:bg-gray-50 focus:ring-4 focus:ring-gray-300
+							font-medium rounded-lg text-sm px-4 lg:px-5 py-2
+							lg:py-2.5 mr-2 dark:hover:bg-gray-700
+							focus:outline-none dark:focus:ring-gray-800'>
+								Log out
+							</button>
+						)}
 						<a
 							href='/'
 							className='text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800'>

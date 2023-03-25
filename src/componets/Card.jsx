@@ -1,18 +1,11 @@
-const Card = ({ post, isFive }) => {
-	let result = '';
-
-	
-	if (isFive) {
-		result = <p className='text-primary'>{post.id}</p>;
-	}
-
+const Card = ({ product }) => {
 	return (
 		<div className='col-3'>
-			<div className='card'>
-				<div className='card-body'>
-					{result}
-					<h5 className='card-title'>{post.title}</h5>
-					<p className='card-text'>{post.body}</p>
+			<div className='card shadow p-3'>
+				<div className='card-body text-center'>
+					<img src={product.image} alt={product.name} />
+					<h5 className='card-title'>{product.name}</h5>
+					<p className='card-text'>{product.body}</p>
 				</div>
 			</div>
 		</div>
