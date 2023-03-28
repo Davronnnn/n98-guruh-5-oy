@@ -1,14 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 // import { LanguageContext } from '../context/LanguageContext';
 // import { language } from '../language';
 import Nav from './Nav';
 import { Link } from 'react-router-dom';
+import { ThemeContext } from '../context/ThemeContext';
 
 const Header = () => {
 	const { setIsLogin, isLogin } = useContext(AuthContext);
 
 	// const { setLanguageType, languageType } = useContext(LanguageContext);
+
+	const { theme, setTheme } = useContext(ThemeContext);
 
 	const logoutHandler = () => {
 		setIsLogin(false);
@@ -30,6 +33,17 @@ const Header = () => {
 							{/* {language[languageType].header.title} */}
 						</span>
 					</a>
+
+					<select
+						value={theme}
+						onChange={(evt) => {
+							setTheme(evt.target.value);
+						}}
+						name=''
+						id=''>
+						<option value='light'>Light</option>
+						<option value='dark'>Dark</option>
+					</select>
 
 					<select
 						onChange={(evt) => {

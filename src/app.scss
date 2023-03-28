@@ -1,0 +1,12 @@
+.light {
+}
+
+.dark {
+	nav,
+	.card,
+	.card *,
+	nav * {
+		background-color: white;
+		color: #000 !important;
+	}
+}
