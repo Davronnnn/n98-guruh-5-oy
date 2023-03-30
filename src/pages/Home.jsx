@@ -15,7 +15,7 @@ import axios from 'axios';
 import { getProducts, updateProducts } from '../services/products';
 import { ThemeContext } from '../context/ThemeContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { DECREMENT, INCREMENT, UPDATE, ADD } from '../store';
+import { DECREMENT, INCREMENT, UPDATE, ADD, REMOVE } from '../store';
 
 const BASE_URL = 'https://63d3e856a93a149755b5c8f1.mockapi.io/';
 const Home = () => {
@@ -36,15 +36,16 @@ const Home = () => {
 			.then((data) => {
 				setTweets(data);
 				setLoading(false);
-			});
 
-		// getProducts().then((res) => {
-		// 	console.log(res);
-		// });
-		// const data = {};
-		// updateProducts(data).then((res) => {
-		// 	console.log(res);
-		// });
+				const favoriteResult = data.filter((tweet) => {
+					if (tweet.isFavorite) {
+						return true;
+					}
+					return false;
+				});
+
+				dispatch({ UPDATE, payload: favoriteResult });
+			});
 	}, []);
 
 	const incrementHandler = () => {
@@ -64,18 +65,31 @@ const Home = () => {
 		});
 	};
 
-	console.log(favorites);
 	const addFavoriteHandler = (tweet) => {
-		dispatch({
-			type: ADD,
-			payload: tweet,
+		let haveProduct = false;
+		favorites.forEach((favorite) => {
+			if (favorite.id === tweet.id) {
+				haveProduct = true;
+			}
 		});
+
+		if (haveProduct) {
+			dispatch({
+				type: REMOVE,
+				payload: tweet,
+			});
+		} else {
+			dispatch({
+				type: ADD,
+				payload: tweet,
+			});
+		}
 	};
 
 	return (
 		<Layout>
-			{favorites.map((tweet) => (
-				<div key={tweet.id}>{tweet.name}</div>
+			{favorites.map((tweet, i) => (
+				<div key={i}>{tweet.name}</div>
 			))}
 			<input
 				className='border-red-500 border'

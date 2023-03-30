@@ -4,6 +4,7 @@ export const INCREMENT = 'increment';
 export const DECREMENT = 'decrement';
 export const UPDATE = 'update';
 export const ADD = 'add';
+export const REMOVE = 'remove';
 
 const counterReducer = (state = 20, action) => {
 	if (action.type === INCREMENT) {
@@ -21,6 +22,17 @@ const favoriteReducer = (state = [], action) => {
 		const newArray = [...state, action.payload];
 
 		return newArray;
+	} else if (action.type === REMOVE) {
+		const result = state.filter((data) => {
+			if (action.payload.id === data.id) {
+				return false;
+			}
+			return true;
+		});
+
+		return result;
+	} else if (action.type === UPDATE) {
+		return action.payload;
 	}
 	return state;
 };

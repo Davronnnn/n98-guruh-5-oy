@@ -1,4 +1,5 @@
 const Card = ({ product }) => {
+	
 	return (
 		<div className='col-3'>
 			<div className='card shadow p-3'>
